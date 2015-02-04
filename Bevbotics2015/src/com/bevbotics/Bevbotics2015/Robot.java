@@ -2,6 +2,7 @@
 package com.bevbotics.Bevbotics2015;
 
 import com.bevbotics.Bevbotics2015.subsystems.DriveTrain;
+import com.bevbotics.Bevbotics2015.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final Winch winch = new Winch();
 	public static OI oi;
 
     private Command autonomousCommand;

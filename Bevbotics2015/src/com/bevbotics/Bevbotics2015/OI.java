@@ -1,5 +1,10 @@
 package com.bevbotics.Bevbotics2015;
 
+import com.bevbotics.Bevbotics2015.commands.Rotate180Command;
+import com.bevbotics.Bevbotics2015.commands.WinchExtendCommand;
+import com.bevbotics.Bevbotics2015.commands.WinchRetractCommand;
+import com.bevbotics.Bevbotics2015.commands.WinchStopCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 
@@ -34,22 +39,18 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	public Joystick XBoxController = new Joystick(RobotMap.XBOX_PORT);
+	public XBoxController XBox;
 	
-	public double getRightTrigger(){
-		return XBoxController.getRawAxis(RobotMap.XBOX_R_TRIGGER);
+	public OI() {
+		XBox = new XBoxController(RobotMap.XBOX_PORT);
+		//XBox.getButtonA().whenPressed(new Rotate180Command());
+		XBox.getButtonY().whenReleased(new WinchStopCommand());
+		XBox.getButtonA().whenReleased(new WinchStopCommand());
+		XBox.getButtonY().whenPressed(new WinchExtendCommand());
+		XBox.getButtonA().whenPressed(new WinchRetractCommand());
 	}
 	
-	public double getLeftTrigger(){
-		return XBoxController.getRawAxis(RobotMap.XBOX_L_TRIGGER);
-	}
 	
-	public boolean getRightButton(){
-		return XBoxController.getRawButton(RobotMap.XBOX_BUTTON_RIGHT);
-	}
-	
-	public boolean getLeftButton(){
-		return XBoxController.getRawButton(RobotMap.XBOX_BUTTON_LEFT);
-	}
+
 }
 

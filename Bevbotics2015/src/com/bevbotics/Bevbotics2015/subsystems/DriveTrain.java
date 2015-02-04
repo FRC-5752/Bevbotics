@@ -18,10 +18,10 @@ public class DriveTrain extends Subsystem {
 	//motors
 	//private LinkedMotors leftMotors = new LinkedMotors(new int[]{RobotMap.MOTOR_LEFT_1, RobotMap.MOTOR_LEFT_2});
 	//private LinkedMotors rightMotors = new LinkedMotors(new int[]{RobotMap.MOTOR_RIGHT_1, RobotMap.MOTOR_RIGHT_2});
-	private Talon leftMotor1 = new Talon(0);
-	private Talon leftMotor2 = new Talon(1);
-	private Talon rightMotor1 = new Talon(2);
-	private Talon rightMotor2 = new Talon(3);
+	private Talon leftMotor1 = new Talon(RobotMap.MOTOR_LEFT_1);
+	private Talon leftMotor2 = new Talon(RobotMap.MOTOR_LEFT_2);
+	private Talon rightMotor1 = new Talon(RobotMap.MOTOR_RIGHT_1);
+	private Talon rightMotor2 = new Talon(RobotMap.MOTOR_RIGHT_2);
 	//
 	//private
 	
@@ -34,13 +34,13 @@ public class DriveTrain extends Subsystem {
     public void setLeftPower(double power){
     	//leftMotors.set(power);
     	leftMotor1.set(power);
-    	leftMotor2.set(-power);
+    	leftMotor2.set(power);
     }
     
     public void setRightPower(double power){
     	//rightMotors.set(power);
     	rightMotor1.set(power);
-    	rightMotor2.set(-power);
+    	rightMotor2.set(power);
     }
     
     public void drive(double leftPower, double rightPower){
