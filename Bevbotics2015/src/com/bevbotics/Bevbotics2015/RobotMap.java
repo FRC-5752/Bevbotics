@@ -19,5 +19,13 @@ public class RobotMap {
 
 	//use which speed to cap the maximum % speed of the which -> Should be in the range of 0.0 to 1.0
 	public static final double WINCH_SPEED = 0.5;
+	
+	//drive speed division coefficient
+	public static double speedDivisor = 2.0;
+	
+	public static int WINCH_ENC_A = 1;
+	public static int WINCH_ENC_B = 2;
+	
+	public static int ULTRASONIC = 4;
 }
 

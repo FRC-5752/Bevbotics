@@ -2,6 +2,7 @@ package com.bevbotics.Bevbotics2015.commands;
 
 import com.bevbotics.Bevbotics2015.OI;
 import com.bevbotics.Bevbotics2015.Robot;
+import com.bevbotics.Bevbotics2015.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,7 @@ public class TankDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("distance", "me");
     	double leftPower, rightPower;
     	leftPower = deadBand(Robot.oi.XBox.getLeftTrigger());
     	rightPower = deadBand(Robot.oi.XBox.getRightTrigger());
@@ -34,14 +36,14 @@ public class TankDriveCommand extends Command {
     	leftPower *= Robot.oi.XBox.getLeftButton() ? -1 : 1;
     	rightPower *= Robot.oi.XBox.getRightButton() ? -1 : 1;
     	
-    	if (leftPower != 0.0 && rightPower != 0.0) {
-    	    Robot.driveTrain.drive(leftPower/4, rightPower/4);
+    	if (leftPower != 0.0 || rightPower != 0.0) {
+    	    Robot.driveTrain.drive(leftPower/RobotMap.speedDivisor, rightPower/RobotMap.speedDivisor);
     	}else{
     		//SmartDashboard.putString("where","")
     		
     		//forward backward speed will be equal - steering is corrected to each power setting using the right stick
-    		leftPower = rightPower = Robot.oi.XBox.getLeftYAxis()/4;
-    		double angle = Robot.oi.XBox.getRightXAxis() * leftPower;
+    		leftPower = rightPower = -1*deadBand(Robot.oi.XBox.getLeftYAxis())/RobotMap.speedDivisor;
+    		double angle = deadBand(Robot.oi.XBox.getRightXAxis()) * leftPower/RobotMap.speedDivisor;
     		leftPower += angle;
     		rightPower -= angle;
     		
@@ -57,7 +59,6 @@ public class TankDriveCommand extends Command {
     		}
     		Robot.driveTrain.drive(leftPower, rightPower);
     	}
-    	//read voltage from the battery
     }
     
     private double deadBand(double d) {

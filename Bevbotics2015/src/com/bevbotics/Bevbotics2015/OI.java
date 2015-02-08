@@ -1,5 +1,7 @@
 package com.bevbotics.Bevbotics2015;
 
+import com.bevbotics.Bevbotics2015.commands.DecreaseDriveSpeedCommand;
+import com.bevbotics.Bevbotics2015.commands.IncreaseDriveSpeedCommand;
 import com.bevbotics.Bevbotics2015.commands.Rotate180Command;
 import com.bevbotics.Bevbotics2015.commands.WinchExtendCommand;
 import com.bevbotics.Bevbotics2015.commands.WinchRetractCommand;
@@ -44,10 +46,12 @@ public class OI {
 	public OI() {
 		XBox = new XBoxController(RobotMap.XBOX_PORT);
 		//XBox.getButtonA().whenPressed(new Rotate180Command());
-		XBox.getButtonY().whenReleased(new WinchStopCommand());
-		XBox.getButtonA().whenReleased(new WinchStopCommand());
-		XBox.getButtonY().whenPressed(new WinchExtendCommand());
-		XBox.getButtonA().whenPressed(new WinchRetractCommand());
+		XBox.getButtonX().whenReleased(new WinchStopCommand());
+		XBox.getButtonB().whenReleased(new WinchStopCommand());
+		XBox.getButtonX().whenPressed(new WinchExtendCommand());
+		XBox.getButtonB().whenPressed(new WinchRetractCommand());
+		XBox.getButtonY().whenPressed(new IncreaseDriveSpeedCommand());
+		XBox.getButtonA().whenPressed(new DecreaseDriveSpeedCommand());
 	}
 	
 	
