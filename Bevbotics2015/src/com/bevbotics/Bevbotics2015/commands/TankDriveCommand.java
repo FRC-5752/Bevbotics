@@ -26,6 +26,7 @@ public class TankDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putBoolean("LIMIT",Robot.winch.reachedLimit());
     	SmartDashboard.putString("distance", "me");
     	double leftPower, rightPower;
     	leftPower = deadBand(Robot.oi.XBox.getLeftTrigger());

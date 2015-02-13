@@ -1,6 +1,7 @@
 
 package com.bevbotics.Bevbotics2015;
 
+import com.bevbotics.Bevbotics2015.subsystems.Arms;
 import com.bevbotics.Bevbotics2015.subsystems.DriveTrain;
 import com.bevbotics.Bevbotics2015.subsystems.Winch;
 
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Winch winch = new Winch();
+	public static final Arms arms = new Arms();
 	public static OI oi;
 
     private Command autonomousCommand;

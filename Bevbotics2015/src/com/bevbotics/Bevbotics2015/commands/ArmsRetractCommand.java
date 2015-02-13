@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WinchExtendCommand extends Command {
+public class ArmsRetractCommand extends Command {
 
-    public WinchExtendCommand() {
+    public ArmsRetractCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.winch);
+    	requires(Robot.arms);
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +21,7 @@ public class WinchExtendCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (!Robot.winch.reachedLimit()) {
-    		Robot.winch.extend();
-    	}else{
-    		Robot.winch.stop();
-    	}
+    	Robot.arms.retractArm();
     }
 
     // Make this return true when this Command no longer needs to run execute()

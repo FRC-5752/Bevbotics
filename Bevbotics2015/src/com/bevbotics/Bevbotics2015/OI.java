@@ -1,5 +1,8 @@
 package com.bevbotics.Bevbotics2015;
 
+import com.bevbotics.Bevbotics2015.commands.ArmsExtendCommand;
+import com.bevbotics.Bevbotics2015.commands.ArmsRetractCommand;
+import com.bevbotics.Bevbotics2015.commands.ArmsStopCommand;
 import com.bevbotics.Bevbotics2015.commands.DecreaseDriveSpeedCommand;
 import com.bevbotics.Bevbotics2015.commands.IncreaseDriveSpeedCommand;
 import com.bevbotics.Bevbotics2015.commands.Rotate180Command;
@@ -42,19 +45,34 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	public XBoxController XBox;
+	public XBoxController XBox2;
 	
 	public OI() {
-		XBox = new XBoxController(RobotMap.XBOX_PORT);
-		//XBox.getButtonA().whenPressed(new Rotate180Command());
-		XBox.getButtonX().whenReleased(new WinchStopCommand());
-		XBox.getButtonB().whenReleased(new WinchStopCommand());
-		XBox.getButtonX().whenPressed(new WinchExtendCommand());
-		XBox.getButtonB().whenPressed(new WinchRetractCommand());
+		XBox = new XBoxController(RobotMap.XBOX_PORT_DRIVER);
+		XBox2 = new XBoxController(RobotMap.XBOX_PORT_OPERATOR);
+		
+//		XBox.getButtonX().whenReleased(new WinchStopCommand());
+//		XBox.getButtonB().whenReleased(new WinchStopCommand());
+//		XBox.getButtonX().whileHeld(new WinchExtendCommand());
+//		XBox.getButtonB().whileHeld(new WinchRetractCommand());
+		
+		//operator xbox controller
+		//winch commands
+		XBox2.getButtonX().whenReleased(new WinchStopCommand());
+		XBox2.getButtonB().whenReleased(new WinchStopCommand());
+		XBox2.getButtonX().whileHeld(new WinchExtendCommand());
+		XBox2.getButtonB().whileHeld(new WinchRetractCommand());
+		
+		//arm commands
+		XBox2.getButtonA().whenReleased(new ArmsStopCommand());
+		XBox2.getButtonY().whenReleased(new ArmsStopCommand());
+		XBox2.getButtonA().whileHeld(new ArmsExtendCommand());
+		XBox2.getButtonY().whileHeld(new ArmsRetractCommand());
+		
+		//driver xbox controller 
+		//drive speed commands
 		XBox.getButtonY().whenPressed(new IncreaseDriveSpeedCommand());
 		XBox.getButtonA().whenPressed(new DecreaseDriveSpeedCommand());
 	}
-	
-	
-
 }
 
