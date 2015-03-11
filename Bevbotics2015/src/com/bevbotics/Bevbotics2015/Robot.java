@@ -1,6 +1,7 @@
 
 package com.bevbotics.Bevbotics2015;
 
+import com.bevbotics.Bevbotics2015.commands.AutonomousCommand;
 import com.bevbotics.Bevbotics2015.subsystems.Arms;
 import com.bevbotics.Bevbotics2015.subsystems.DriveTrain;
 import com.bevbotics.Bevbotics2015.subsystems.Winch;
@@ -10,6 +11,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static final Winch winch = new Winch();
 	public static final Arms arms = new Arms();
 	public static OI oi;
+	private SendableChooser driveModeChooser = new SendableChooser();
 
     private Command autonomousCommand;
 
@@ -33,8 +37,11 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
+		this.driveModeChooser.addDefault("Andrew Drive", "A");
+		this.driveModeChooser.addObject("Tom Drive", "T");
+		SmartDashboard.putData("Drive selection",this.driveModeChooser);
         // instantiate the command used for the autonomous period
-        //autonomousCommand = new ();
+        autonomousCommand = new AutonomousCommand();
     }
 	
 	public void disabledPeriodic() {
@@ -73,6 +80,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+		RobotMap.TomDrive = ((String) this.driveModeChooser.getSelected()).equals("T");
         Scheduler.getInstance().run();
     }
     

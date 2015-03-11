@@ -58,10 +58,10 @@ public class OI {
 		
 		//operator xbox controller
 		//winch commands
-		XBox2.getButtonX().whenReleased(new WinchStopCommand());
-		XBox2.getButtonB().whenReleased(new WinchStopCommand());
-		XBox2.getButtonX().whileHeld(new WinchExtendCommand());
-		XBox2.getButtonB().whileHeld(new WinchRetractCommand());
+		XBox.getButtonX().whenReleased(new WinchStopCommand());
+		XBox.getButtonB().whenReleased(new WinchStopCommand());
+		XBox.getButtonX().whileHeld(new WinchExtendCommand());
+		XBox.getButtonB().whileHeld(new WinchRetractCommand());
 		
 		//arm commands
 		XBox2.getButtonA().whenReleased(new ArmsStopCommand());

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TalonSRX;
@@ -36,19 +37,51 @@ public class Winch extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	
+        enc.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance);
+        final double distancePerPulse = Math.PI * WINCH_DIAMETER / 497.0;
+        
+        enc.setDistancePerPulse(distancePerPulse);
+    	
     	upLimitOut.setVoltage(5.0);
-    	//upLimitOut.set(true);
     	enc.reset();
+    	controller.enable();
     }
     
+//    public void extendPID(double distance) {
+//    	controller.setSetpoint();
+//    }
+    
+    public void extendPID() {
+    	controller.setSetpoint(RobotMap.WINCH_SPEED_PID);
+    }
+    
+    /**
+     * @deprecated use {@link #extendPID()} instead
+     */
     public void extend() {
     	winchMotor.set(RobotMap.WINCH_SPEED);
     }
     
+    public void retractPID(){
+    	controller.setSetpoint(-RobotMap.WINCH_SPEED_PID);
+    }
+    
+    /**
+     * @deprecated use {@link #retractPID()} instead
+     */
+    @Deprecated 
     public void retract() {
     	winchMotor.set(-RobotMap.WINCH_SPEED);
     }
     
+    public void stopPID() {
+    	controller.setSetpoint(0.0);
+    }
+    
+    /**
+     * @deprecated use {@link #stopPID()} instead
+     */
     public void stop() {
     	winchMotor.set(0.0);
     }
@@ -60,7 +93,6 @@ public class Winch extends Subsystem {
     public boolean reachedLimit(){
     	SmartDashboard.putNumber("Volts", upLimitIn.getVoltage());
     	return upLimitIn.getVoltage() > 3.0;
-    	//return upLimitIn.get();
     }
     
     public double getEncoderDistance() {

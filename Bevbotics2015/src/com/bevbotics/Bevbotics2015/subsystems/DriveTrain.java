@@ -41,16 +41,38 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new TankDriveCommand());
     }
     
+    private double lastLeftPower = 0.0;
     public void setLeftPower(double power){
     	//leftMotors.set(power);
+    	if (Math.abs(lastLeftPower - power) > RobotMap.ACCEL_COEFFICIENT) {
+    		if (Math.signum(power-lastLeftPower) == 1) {
+    			power = lastLeftPower + RobotMap.ACCEL_COEFFICIENT;
+    		}else if (Math.signum(power-lastLeftPower) == -1) {
+    			power = lastLeftPower - RobotMap.ACCEL_COEFFICIENT;
+    		}
+    	}
     	leftMotor1.set(power);
     	leftMotor2.set(power);
+    	
+    	lastLeftPower = power;
     }
     
+    private double lastRightPower = 0.0;
     public void setRightPower(double power){
     	//rightMotors.set(power);
+    	if (Math.abs(lastRightPower - power) > RobotMap.ACCEL_COEFFICIENT) {
+    		if (Math.signum(power-lastRightPower) == 1) {
+    			power = lastRightPower + RobotMap.ACCEL_COEFFICIENT;
+    		}else if (Math.signum(power-lastRightPower) == -1) {
+    			power = lastRightPower - RobotMap.ACCEL_COEFFICIENT;
+    		}
+    	}
+    	if (power > 1.0) {power = 1.0;}
+    	if (power < -1.0) {power = -1.0;}
     	rightMotor1.set(power);
     	rightMotor2.set(power);
+    	
+    	lastRightPower = power;
     }
     
     public void drive(double leftPower, double rightPower){

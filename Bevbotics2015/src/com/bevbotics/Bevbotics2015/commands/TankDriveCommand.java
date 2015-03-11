@@ -28,42 +28,49 @@ public class TankDriveCommand extends Command {
     protected void execute() {
     	SmartDashboard.putBoolean("LIMIT",Robot.winch.reachedLimit());
     	SmartDashboard.putString("distance", "me");
+    	//SmartDashboard.putNumber("POV", Robot.oi.XBox.getPOV());
     	double leftPower, rightPower;
-    	leftPower = deadBand(Robot.oi.XBox.getLeftTrigger());
-    	rightPower = deadBand(Robot.oi.XBox.getRightTrigger());
     	
-    	//use the left/right buttons to invert driving direction
-    	//ie pressing the left button causes the left trigger to control reversing speed instead of forward speed
-    	leftPower *= Robot.oi.XBox.getLeftButton() ? -1 : 1;
-    	rightPower *= Robot.oi.XBox.getRightButton() ? -1 : 1;
-    	
-    	if (leftPower != 0.0 || rightPower != 0.0) {
-    	    Robot.driveTrain.drive(leftPower/RobotMap.speedDivisor, rightPower/RobotMap.speedDivisor);
-    	}else{
-    		//SmartDashboard.putString("where","")
-    		
-    		//forward backward speed will be equal - steering is corrected to each power setting using the right stick
-    		leftPower = rightPower = -1*deadBand(Robot.oi.XBox.getLeftYAxis())/RobotMap.speedDivisor;
-    		double angle = deadBand(Robot.oi.XBox.getRightXAxis()) * leftPower/RobotMap.speedDivisor;
-    		leftPower += angle;
-    		rightPower -= angle;
-    		
-    		//this may need modification if the robot turns too slowly
-    		if (leftPower > 1.0) {
-    			leftPower = 1.0;
-    		}else if(leftPower < -1.0) {
-    			leftPower = -1.0;
-    		}else if(rightPower > 1.0){
-    			rightPower = 1.0;
-    		}else if(rightPower < -1.0){
-    			rightPower = -1.0;
-    		}
-    		Robot.driveTrain.drive(leftPower, rightPower);
+    	//tom drive
+    	if (RobotMap.TomDrive) {
+    		leftPower = deadBand(-1*Robot.oi.XBox.getLeftYAxis());
+    		rightPower = deadBand(-1*Robot.oi.XBox.getRightYAxis());
+    	}else {
+    	//andrew drive
+    		leftPower = deadBand(Robot.oi.XBox.getLeftTrigger());
+    		rightPower = deadBand(Robot.oi.XBox.getRightTrigger());
+    		//use the left/right buttons to invert driving direction
+    		//ie pressing the left button causes the left trigger to control reversing speed instead of forward speed
+    		leftPower *= Robot.oi.XBox.getLeftButton() ? -1 : 1;
+    		rightPower *= Robot.oi.XBox.getRightButton() ? -1 : 1;
     	}
+    	//if (leftPower != 0.0 || rightPower != 0.0) {
+    	    Robot.driveTrain.drive(leftPower/RobotMap.speedDivisor, rightPower/RobotMap.speedDivisor);
+//    	}else{
+//    		//SmartDashboard.putString("where","")
+//    		
+//    		//forward backward speed will be equal - steering is corrected to each power setting using the right stick
+//    		leftPower = rightPower = -1*deadBand(Robot.oi.XBox.getLeftYAxis())/RobotMap.speedDivisor;
+//    		double angle = deadBand(Robot.oi.XBox.getRightXAxis()) * leftPower/RobotMap.speedDivisor;
+//    		leftPower += angle;
+//    		rightPower -= angle;
+//    		
+//    		//this may need modification if the robot turns too slowly
+//    		if (leftPower > 1.0) {
+//    			leftPower = 1.0;
+//    		}else if(leftPower < -1.0) {
+//    			leftPower = -1.0;
+//    		}else if(rightPower > 1.0){
+//    			rightPower = 1.0;
+//    		}else if(rightPower < -1.0){
+//    			rightPower = -1.0;
+//    		}
+//    		Robot.driveTrain.drive(leftPower, rightPower);
+//    	}
     }
     
     private double deadBand(double d) {
-    	if (Math.abs(d)<.05) {
+    	if (Math.abs(d)<.1) {
     		return 0.0;
     	}else{
     		return d;

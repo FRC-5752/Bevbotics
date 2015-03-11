@@ -22,6 +22,8 @@ public class RobotMap {
 	//use which speed to cap the maximum % speed of the which -> Should be in the range of 0.0 to 1.0
 	public static final double WINCH_SPEED = 1.0;
 	public static final double ARMS_SPEED = 1.0;
+	public static final double WINCH_SPEED_PID = 11.0;
+	public static final double ACCEL_COEFFICIENT = 0.025;
 	
 	//drive speed division coefficient
 	public static double speedDivisor = 2.0;
@@ -34,5 +36,6 @@ public class RobotMap {
 	public static final int LIMIT_SWITCH_IN = 2;
 	public static final int LIMIT_SWITCH_OUT = 1;
 
+	public static boolean TomDrive = false;
 }
 
